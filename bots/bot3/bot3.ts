@@ -1,21 +1,14 @@
+import { Client, GatewayIntentBits, Collection } from "discord.js";
 import fs from "fs";
 import path from "path";
-import { Client, Collection, GatewayIntentBits } from "discord.js";
 
-//bot1 client
-export const bot1 = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
-});
+export const bot3 = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-//commands collection for bot1
-bot1.commands = new Collection();
+//commands collection for bot3
+bot3.commands = new Collection();
 
-//commands handler for bot1
-export function handlerCommandsBotOne() {
+//commands handler for bot3
+export function handlerCommandsBotThree() {
   const commandsPath = path.join(__dirname, "commands");
   const commandFiles = fs
     .readdirSync(commandsPath)
@@ -24,20 +17,20 @@ export function handlerCommandsBotOne() {
     const filePath = path.join(commandsPath, file);
     const commands = require(filePath);
     if ("data" in commands && "execute" in commands) {
-      bot1.commands.set(commands.data.name, commands);
+      bot3.commands.set(commands.data.name, commands);
       console.log(`these commands on ${filePath} are valid`);
     } else {
       console.log(`these commands on ${filePath} are not valid`);
     }
   }
-  //console.log(bot1.commands);
+  //console.log(bot3.commands);
 }
 
-//bot1 interactionCreate event
-bot1.on("interactionCreate", async (interaction) => {
+//bot3 interactionCreate event
+bot3.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
-  const command = bot1.commands.get(interaction.commandName);
+  const command = bot3.commands.get(interaction.commandName);
   if (!command) {
     console.log(`Command ${interaction.commandName} not found`);
     return;
@@ -55,8 +48,7 @@ bot1.on("interactionCreate", async (interaction) => {
   }
 });
 
-//bot1 ready event
-bot1.once("ready", () => {
-  console.log(`Bot 1 connected as ${bot1.user?.tag}`);
-  handlerCommandsBotOne();
+bot3.on("ready", () => {
+  console.log(`Bot 3 conectado como ${bot3.user?.tag}`);
+  handlerCommandsBotThree();
 });

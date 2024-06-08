@@ -1,5 +1,5 @@
 // discord.d.ts
-import { Client, Collection } from "discord.js";
+import { Collection, Client } from "discord.js";
 
 declare module "discord.js" {
   export interface Client {
