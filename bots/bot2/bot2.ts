@@ -2,6 +2,7 @@ import { Client, GatewayIntentBits, Collection } from "discord.js";
 import fs from "fs";
 import path from "path";
 
+
 export const bot2 = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 //commands collection for bot2
@@ -12,7 +13,7 @@ export function handlerCommandsBotTwo() {
   const commandsPath = path.join(__dirname, "commands");
   const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((file) => file.endsWith(".ts"));
+    .filter((file) => file.endsWith(".js"));
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const commands = require(filePath);
@@ -49,6 +50,6 @@ bot2.on("interactionCreate", async (interaction) => {
 });
 
 bot2.on("ready", () => {
-  console.log(`Bot 2 conectado como ${bot2.user?.tag}`);
+  console.log(`Bot 2 connected as ${bot2.user?.tag}`);
   handlerCommandsBotTwo();
 });

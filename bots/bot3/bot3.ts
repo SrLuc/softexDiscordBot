@@ -12,13 +12,13 @@ export function handlerCommandsBotThree() {
   const commandsPath = path.join(__dirname, "commands");
   const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((file) => file.endsWith(".ts"));
+    .filter((file) => file.endsWith(".js"));
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const commands = require(filePath);
     if ("data" in commands && "execute" in commands) {
       bot3.commands.set(commands.data.name, commands);
-      console.log(`these commands on ${filePath} are valid`);
+      //console.log(`these commands on ${filePath} are valid`);
     } else {
       console.log(`these commands on ${filePath} are not valid`);
     }
@@ -49,6 +49,6 @@ bot3.on("interactionCreate", async (interaction) => {
 });
 
 bot3.on("ready", () => {
-  console.log(`Bot 3 conectado como ${bot3.user?.tag}`);
+  console.log(`Bot 3 connected as ${bot3.user?.tag}`);
   handlerCommandsBotThree();
 });
