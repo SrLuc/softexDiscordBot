@@ -1,14 +1,15 @@
-const { CLIENT_ID2, GUILD_ID2, TOKEN2 } = require("../../config.json");
+const { BOT2 } = require("../../config.json");
 const fs = require("node:fs");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const path = require("node:path");
+var colors = require("colors");
 
 // Reading all the commands
 const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs
   .readdirSync(commandsPath)
-  .filter((file) => file.endsWith(".ts"));  
+  .filter((file) => file.endsWith(".ts"));
 
 const commands = [];
 
@@ -19,20 +20,21 @@ for (const file of commandFiles) {
 }
 
 // Rest instance
-const rest = new REST({ version: "10" }).setToken(TOKEN2);
+const rest = new REST({ version: "10" }).setToken(BOT2.TOKEN2);
 
 // Deploying commands
 (async () => {
   try {
     console.log(
-      `Started refreshing ${commands.length} application (/) commands.`
+      "Bot2:".magenta +
+        `Started refreshing ${commands.length} application (/) commands.`
     );
     const data = await rest.put(
-      Routes.applicationGuildCommands(CLIENT_ID2, GUILD_ID2),
+      Routes.applicationGuildCommands(BOT2.CLIENT_ID2, BOT2.GUILD_ID2),
       { body: commands }
     );
     console.log(
-      `Successfully reloaded ${data.length} application (/) commands.`
+      `Successfully reloaded ${data.length} application (/) commands.`.green.bold
     );
   } catch (error) {
     console.error(error);
