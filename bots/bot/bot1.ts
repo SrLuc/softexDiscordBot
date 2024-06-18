@@ -35,22 +35,22 @@ export function handlerCommandsBotOne() {
 }
 
 //load events for bot1
-export function loadEventsBotOne() {
-  const eventsPath = path.join(__dirname, "events");
-  const eventFiles = fs
-    .readdirSync(eventsPath)
-    .filter((file) => file.endsWith(".js"));
-  for (const file of eventFiles) {
-    const filePath = path.join(eventsPath, file);
-    const event = require(filePath);
-    if ("name" in event && "execute" in event) {
-      bot1.on(event.name, event.execute);
-      console.log(`Event ${event.name} loaded`);
-    } else {
-      console.log(`Event ${file} not valid`);
-    }
-  }
-}
+// export function loadEventsBotOne() {
+//   const eventsPath = path.join(__dirname, "events");
+//   const eventFiles = fs
+//     .readdirSync(eventsPath)
+//     .filter((file) => file.endsWith(".js"));
+//   for (const file of eventFiles) {
+//     const filePath = path.join(eventsPath, file);
+//     const event = require(filePath);
+//     if ("name" in event && "execute" in event) {
+//       bot1.on(event.name, event.execute);
+//       console.log(`Event ${event.name} loaded`);
+//     } else {
+//       console.log(`Event ${file} not valid`);
+//     }
+//   }
+// }
 
 //bot1 interactionCreate event
 bot1.on("interactionCreate", async (interaction) => {
@@ -78,5 +78,5 @@ bot1.on("interactionCreate", async (interaction) => {
 bot1.once("ready", () => {
   console.log(`Bot 1 connected as ${bot1.user?.tag}`);
   handlerCommandsBotOne();
-  loadEventsBotOne();
+  //loadEventsBotOne();
 });
